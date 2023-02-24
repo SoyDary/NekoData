@@ -27,6 +27,8 @@ public class CommandCompleter implements TabCompleter {
 	        List<String> preCommands = new ArrayList<>();
 	        commandsList.add("get");
         	commandsList.add("set");
+        	commandsList.add("increment");
+        	commandsList.add("decrement");
         	commandsList.add("remove");
 	        for (String text : commandsList) {
 	          if (text.toLowerCase().startsWith(a[0].toLowerCase()))
@@ -35,7 +37,7 @@ public class CommandCompleter implements TabCompleter {
 	        return preCommands;
 			
 		} else {
-			if(a[0].equalsIgnoreCase("get") || a[0].equalsIgnoreCase("remove")) {
+			if(a[0].equalsIgnoreCase("get") || a[0].equalsIgnoreCase("remove") || a[0].equalsIgnoreCase("increment") || a[0].equalsIgnoreCase("decrement")) {
 				if(a.length == 3) {
 					User user = plugin.getUtils().findUser(a[1]);
 					if(user == null) return null;

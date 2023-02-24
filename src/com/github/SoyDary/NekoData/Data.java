@@ -27,6 +27,14 @@ public class Data {
 	
 	public String getData(UUID uuid, String key) {
 		FileConfiguration config = getConfiguration(uuid.toString());
+		if(plugin.numberData.contains(key)) {
+			if(config.getString(key) == null) return "0";
+			try {
+				Integer.valueOf(config.getString(key));
+			} catch (Exception e) {
+				return "0"; 
+			}
+		}
 		return config.getString(key);
 	}
 	

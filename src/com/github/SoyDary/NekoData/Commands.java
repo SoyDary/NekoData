@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.earth2me.essentials.User;
+import com.github.SoyDary.NekoData.Utils.SetType;
 
 public class Commands implements CommandExecutor {
 	
@@ -31,8 +32,10 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		switch(a[0].toLowerCase()) {		
-		case "set": return setData(s, l, a);
-		case "get": return getData(s, l, a);	
+		case "set": return setData(s, l, a, SetType.Normal);
+		case "get": return getData(s, l, a);
+		case "increment": return setData(s, l, a, SetType.Increment);	
+		case "decrement": return setData(s, l, a, SetType.Decrement);	
 		case "remove": return removeData(s, l, a);	
 		}
 		return true;
@@ -60,7 +63,8 @@ public class Commands implements CommandExecutor {
 		return true;
 		
 	}	
-	public boolean setData(CommandSender s, String label, String[] a) {
+	
+	public boolean setData(CommandSender s, String label, String[] a, SetType type) {
 		if(a.length < 4) {
 			s.sendMessage(plugin.getUtils().color(plugin.prefix+" &e/"+label+" set <player> <data> <value>"));
 			return true;
@@ -74,9 +78,36 @@ public class Commands implements CommandExecutor {
 	    for(int i = 3; i < a.length; i++) {
 	    	if (i > 3) sb.append(" "+a[i]); else sb.append(a[i]);
 	    }
+	    
 	    String value = sb.toString();
 	    String key = a[2];
 		if(value.equals("null")) value = null;
+		if(plugin.numberData.contains(key)) {		
+			if(value == null) {
+				value = "0";
+			} else {
+				Integer keyNumber;
+				try {
+					keyNumber = Integer.valueOf(value);
+				} catch (Exception e) {
+					s.sendMessage(plugin.getUtils().color(plugin.prefix+" &eLa data de tipo &7"+key+" &esolo acepta números."));
+					return true;
+				}
+				if(type == SetType.Normal) {
+					value = ""+keyNumber;
+				} else {
+					Integer data = Integer.valueOf(plugin.getData().getData(target.getUUID(), key));
+					if(type == SetType.Increment) {
+						data = data+keyNumber;
+					}
+					if(type == SetType.Decrement) {
+						data = data-keyNumber;
+					}
+					value = ""+data;
+				}
+				
+			}
+		}
 		s.sendMessage(plugin.getUtils().color(plugin.prefix+" &a"+target.getName()+" &7-> &festablecido el valor &#737373[&7"+key+" &f: &7"+value+"&#737373]"));
 	    plugin.getData().setData(target.getUUID(), key, value);
 		return true;
@@ -121,6 +152,7 @@ public class Commands implements CommandExecutor {
 		return true;
 		
 	}
+	
 	
 	public boolean test(CommandSender s, String label, String[] a) {
 		return true;

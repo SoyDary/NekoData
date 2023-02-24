@@ -23,6 +23,11 @@ public class Utils {
 
 	}
 	
+	public enum SetType {
+		Increment,
+		Decrement,
+		Normal
+	}
 	public User findUser(String str) {		
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			if(!p.getName().equalsIgnoreCase(str)) continue;

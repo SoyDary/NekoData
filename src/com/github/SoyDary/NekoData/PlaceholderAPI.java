@@ -23,7 +23,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
 
     @Override
     public String getAuthor(){
-        return "SoyDary";
+        return plugin.getDescription().getAuthors().get(0);
     }
    
     @Override

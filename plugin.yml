@@ -2,7 +2,7 @@ name: NekoData
 main: com.github.SoyDary.NekoData.NekoData
 depend: [Essentials, PlaceholderAPI]
 author: Dariela
-version: 1.0.1
+version: 1.0.2
 api-version: 1.13
 commands:
    NekoData:

@@ -39,8 +39,8 @@ public class PlaceholderAPI extends PlaceholderExpansion {
 	@Override
     public String onPlaceholderRequest(Player p, String id) {
 		if(p == null) return null;
-		if(id.startsWith("value;")) {
-			String[] a = id.split("value;");
+		if(id.startsWith("value_") || id.startsWith("value;")) {
+			String[] a = id.startsWith("value_") ? id.split("value_") : id.split("value;");
 			if(a.length == 0) return null;
 			String value = a[1];
 			return ""+plugin.getData().getData(p.getUniqueId(), value);
